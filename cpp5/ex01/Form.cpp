@@ -4,8 +4,8 @@
 Form::~Form() { std::cout << "Form destructor called." << std::endl; }
 
 Form::Form(const std::string &name, int gradeToSign, int gradeToExecute)
-    : name(name), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute),
-      _isSigned(false) {
+    : name(name), _isSigned(false), _gradeToSign(gradeToSign),
+      _gradeToExecute(gradeToExecute) {
   if (this->_gradeToSign < 1 || this->_gradeToExecute < 1) {
     throw GradeTooHighException();
   }
@@ -14,13 +14,13 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExecute)
   }
 }
 Form::Form()
-    : name("Form"), _isSigned(false), _gradeToExecute(100), _gradeToSign(100) {
+    : name("Form"), _isSigned(false), _gradeToSign(100), _gradeToExecute(100) {
   std::cout << "Form Default Constructor called." << std::endl;
 }
 
 Form::Form(const Form &other)
-    : name(other.name), _gradeToSign(other._gradeToSign),
-      _gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned) {
+    : name(other.name), _isSigned(other._isSigned),
+      _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute) {
   std::cout << "Form Copy Constructor called for " << std::endl;
 }
 
