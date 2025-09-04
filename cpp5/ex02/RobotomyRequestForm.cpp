@@ -24,6 +24,10 @@ RobotomyRequestForm::operator=(const RobotomyRequestForm &other) {
   return *this;
 }
 
+RobotomyRequestForm::RobotomyRequestForm(const std::string& target)
+  : AForm("defaultRobotomyRequest", 72, 45), target(target){
+}
+
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
   if (!isSigned()) {
     throw AForm::FormNotSignedException();

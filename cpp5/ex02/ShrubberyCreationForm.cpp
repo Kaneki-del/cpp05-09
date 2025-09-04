@@ -4,6 +4,10 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
   std::cout << "ShrubberyCreationForm destructor called." << std::endl;
 }
 
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
+  : AForm("defaultShrubbery", 145, 137), target(target){
+}
+
 ShrubberyCreationForm::ShrubberyCreationForm()
     : AForm("defaultShrubbery", 145, 137), target("default") {
 

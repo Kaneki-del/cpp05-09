@@ -27,6 +27,9 @@ PresidentialPardonForm::operator=(const PresidentialPardonForm &other) {
   return *this;
 }
 
+PresidentialPardonForm::PresidentialPardonForm(const std::string &target)
+    : AForm("defaultPresidentialPardon", 25, 5), target(target) {}
+
 void PresidentialPardonForm::execute(Bureaucrat const &executor) const {
   if (!isSigned()) {
     throw AForm::FormNotSignedException();

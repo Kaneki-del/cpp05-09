@@ -30,6 +30,7 @@ public:
   void increment();
   void decrement();
   void signForm(AForm &f);
+  void executeForm(AForm const &form) const;
 
 private:
   const std::string name;
