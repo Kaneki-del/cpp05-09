@@ -8,7 +8,6 @@ Intern::Intern() {
 
 Intern::Intern(const Intern &other) {
   (void)other;
-  std::cout << "Intern Copy Constructor called for " << std::endl;
 }
 
 Intern &Intern::operator=(const Intern &other) {
@@ -42,7 +41,6 @@ AForm *Intern::makeForm(const std::string &formName,
       return forms[i](targetName);
     }
   }
-
   std::cerr << "Error: Intern couldn’t create form " << formName
             << " because the form name does not exist." << std::endl;
   return NULL;

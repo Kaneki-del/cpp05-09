@@ -21,7 +21,6 @@ int main() {
   } catch (const std::exception &e) {
     std::cerr << "Caught an exception: " << e.what() << std::endl;
   }
-
   delete r_form;
   delete p_form;
 

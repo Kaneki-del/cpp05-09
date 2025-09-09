@@ -9,7 +9,6 @@
 
 int main() {
   srand(time(0));
-
   try {
     Bureaucrat high_bureaucrat("The Boss", 1);
     ShrubberyCreationForm s_form("Home");

@@ -11,7 +11,6 @@ public:
   PresidentialPardonForm(const std::string &name, int grade);
   PresidentialPardonForm(const std::string &target);
   void execute(Bureaucrat const &executor) const;
-
 private:
   std::string target;
 };

@@ -11,7 +11,6 @@ public:
   RobotomyRequestForm(const std::string &name, int grade);
   RobotomyRequestForm(const std::string &target);
   void execute(Bureaucrat const &executor) const;
-
 private:
   std::string target;
 };

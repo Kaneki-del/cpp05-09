@@ -21,7 +21,6 @@ Form::Form()
 Form::Form(const Form &other)
     : name(other.name), _isSigned(other._isSigned),
       _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute) {
-  std::cout << "Form Copy Constructor called for " << std::endl;
 }
 
 Form &Form::operator=(const Form &other) {

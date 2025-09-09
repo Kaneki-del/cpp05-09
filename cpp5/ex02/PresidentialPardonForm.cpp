@@ -6,7 +6,6 @@ PresidentialPardonForm::~PresidentialPardonForm() {
 
 PresidentialPardonForm::PresidentialPardonForm()
     : AForm("defaultPresidentialPardon", 25, 5), target("default") {
-
   std::cout << "PresidentialPardonForm Default Constructor called."
             << std::endl;
 }

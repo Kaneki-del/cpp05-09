@@ -2,7 +2,6 @@ NAME      = Bureaucrat
 CC        = c++
 CFLAGS    =  -Wall -Wextra -Werror -std=c++98 
 RM        = rm -rf
-
 SRCS      = Bureaucrat.cpp main.cpp Form.cpp
 OBJS      = $(SRCS:.cpp=.o)
 

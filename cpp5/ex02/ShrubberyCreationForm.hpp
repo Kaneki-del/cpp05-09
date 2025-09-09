@@ -13,7 +13,6 @@ public:
   ShrubberyCreationForm(const std::string &target);
   ShrubberyCreationForm(const std::string &name, int grade);
   void execute(Bureaucrat const &executor) const;
-
 private:
   std::string target;
 };

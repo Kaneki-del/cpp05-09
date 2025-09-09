@@ -10,14 +10,11 @@ ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
 
 ShrubberyCreationForm::ShrubberyCreationForm()
     : AForm("defaultShrubbery", 145, 137), target("default") {
-
   std::cout << "ShrubberyCreationForm Default Constructor called." << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
     : AForm(other), target(other.target) {
-  std::cout << "ShrubberyCreationForm Copy Constructor called for "
-            << std::endl;
 }
 
 ShrubberyCreationForm &
@@ -30,7 +27,6 @@ ShrubberyCreationForm::operator=(const ShrubberyCreationForm &other) {
 }
 
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
-
   if (!isSigned())
     throw AForm::FormNotSignedException();
   if (executor.getGrade() > GetgradeToExecute())
@@ -41,7 +37,6 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
   if (!outFile.is_open()) {
     throw AForm::FileCreationException();
   }
-
   outFile << "    /\\    \n";
   outFile << "   /  \\   \n";
   outFile << "  /    \\  \n";
