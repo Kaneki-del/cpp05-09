@@ -15,6 +15,7 @@ class ScalarConverter;
 class ScalarConverter {
 public:
   static void convert(std::string input);
+
 private:
   static int getType(std::string input);
   ScalarConverter();
