@@ -17,92 +17,66 @@ void printFromChar(char c) {
   std::cout << "double: " << static_cast<double>(c) << std::endl;
 }
 
-void printFromInt(int i) {
-  if (i > 127 || i < 0)
-    std::cout << "char: impossible" << std::endl;
-  else if (!isprint(i))
+void printFromInt(std::string input) {
+  int num = std::atoi(input.c_str());
+  if (std::numeric_limits<char>::min() > num ||
+      std::numeric_limits<char>::max() < num)
+    std::cout << "impossible" << std::endl;
+
+  else if (!isprint(num))
     std::cout << "char: Non displayable" << std::endl;
   else
-    std::cout << "char: '" << static_cast<char>(i) << "'" << std::endl;
-  std::cout << "int: " << i << std::endl;
-  std::cout << "float: " << static_cast<float>(i) << "f" << std::endl;
-  std::cout << "double: " << static_cast<double>(i) << std::endl;
+    std::cout << "char: '" << static_cast<char>(num) << "'" << std::endl;
+  std::cout << "int: " << num << std::endl;
+  std::cout << "float: " << static_cast<float>(num) << "f" << std::endl;
+  std::cout << "double: " << static_cast<double>(num) << std::endl;
 }
 
-void printFromFloat(float f) {
-  if (std::isinf(f) || std::isnan(f) || f < std::numeric_limits<char>::min() ||
-      f > std::numeric_limits<char>::max()) {
-    std::cout << "char: impossible" << std::endl;
-  } else if (!isprint(static_cast<char>(f))) {
-    std::cout << "char: Non displayable" << std::endl;
-  } else {
-    std::cout << "char: '" << static_cast<char>(f) << "'" << std::endl;
-  }
+void printFromFloat(std::string input) {
+  float num = std::strtof(input.c_str(), NULL);
+  int error = 0;
+  if (std::numeric_limits<char>::min() > num ||
+      std::numeric_limits<char>::max() < num)
+    std::cout << "impossible" << std::endl;
 
-  if (std::isinf(f) || std::isnan(f))
+  else if (!isprint(num))
+    std::cout << "char: Non displayable" << std::endl;
+  else
+    std::cout << "char: '" << static_cast<char>(num) << "'" << std::endl;
+  if (error == ERANGE)
+    std::cout << "float: impossible" << std::endl;
+
+  if (std::isinf(num) || std::isnan(num) ||
+      std::numeric_limits<int>::min() > static_cast<int>(num) ||
+      std::numeric_limits<int>::max() < static_cast<int>(num))
     std::cout << "int: impossible" << std::endl;
   else {
-    std::cout << "int: " << static_cast<int>(f) << std::endl;
+    std::cout << "int: " << static_cast<int>(num) << std::endl;
   }
-
-  if (std::isinf(f)) {
-    if (std::signbit(f))
-      std::cout << "float: -inff" << std::endl;
-    else
-      std::cout << "float: +inff" << std::endl;
-  } else if (std::isnan(f)) {
-    std::cout << "float: nanf" << std::endl;
-  } else {
-    std::cout << "float: " << f << "f" << std::endl;
-  }
-  if (std::isinf(f)) {
-    if (std::signbit(f))
-      std::cout << "double: -inf" << std::endl;
-    else
-      std::cout << "double: +inf" << std::endl;
-  } else if (std::isnan(f)) {
-    std::cout << "double: nan" << std::endl;
-  } else {
-    std::cout << "double: " << static_cast<double>(f) << std::endl;
-  }
+  std::cout << "float: " << num << "f" << std::endl;
+  std::cout << "double: " << static_cast<double>(num) << std::endl;
 }
 
-void printFromDouble(double d) {
-  if (std::isinf(d) || std::isnan(d) || d < std::numeric_limits<char>::min() ||
-      d > std::numeric_limits<char>::max()) {
-    std::cout << "char: impossible" << std::endl;
-  } else if (!isprint(static_cast<char>(d))) {
-    std::cout << "char: Non displayable" << std::endl;
-  } else {
-    std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
-  }
+void printFromDouble(std::string input) {
+  double d = std::strtod(input.c_str(), NULL);
 
-  if (std::isinf(d) || std::isnan(d))
+  if (std::numeric_limits<char>::min() > d ||
+      std::numeric_limits<char>::max() < d)
+    std::cout << "impossible" << std::endl;
+  else if (!isprint(d))
+    std::cout << "char: Non displayable" << std::endl;
+  else
+    std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
+
+  if (std::isinf(d) || std::isnan(d) ||
+      std::numeric_limits<int>::min() > static_cast<int>(d) ||
+      std::numeric_limits<int>::max() < static_cast<int>(d))
     std::cout << "int: impossible" << std::endl;
   else {
     std::cout << "int: " << static_cast<int>(d) << std::endl;
   }
-
-  if (std::isinf(d)) {
-    if (std::signbit(d))
-      std::cout << "float: -inff" << std::endl;
-    else
-      std::cout << "float: +inff" << std::endl;
-  } else if (std::isnan(d)) {
-    std::cout << "float: nanf" << std::endl;
-  } else {
-    std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
-  }
-  if (std::isinf(d)) {
-    if (std::signbit(d))
-      std::cout << "double: -inf" << std::endl;
-    else
-      std::cout << "double: +inf" << std::endl;
-  } else if (std::isnan(d)) {
-    std::cout << "double: nan" << std::endl;
-  } else {
-    std::cout << "double: " << d << std::endl;
-  }
+  std::cout << "float: " << static_cast<double>(d) << "f" << std::endl;
+  std::cout << "double: " << d << std::endl;
 }
 
 bool isChar(std::string input) {
@@ -169,11 +143,22 @@ bool isDouble(std::string input) {
   return false;
 }
 
+int trueType(std::string input) {
+  int error = 0;
+  long num = std::strtol(input.c_str(), NULL, 10);
+  if (error == ERANGE)
+    return DOUBLE_TYPE;
+  if (num > std::numeric_limits<int>::max() ||
+      num < std::numeric_limits<int>::min()) {
+    return FLOAT_TYPE;
+  }
+  return INT_TYPE;
+}
 int ScalarConverter::getType(std::string input) {
   if (isChar(input))
     return CHAR_TYPE;
   else if (isInt(input))
-    return INT_TYPE;
+    return trueType(input);
   else if (isFloat(input))
     return FLOAT_TYPE;
   else if (isDouble(input))
@@ -188,14 +173,13 @@ void ScalarConverter::convert(std::string input) {
     printFromChar(input[0]);
     break;
   case INT_TYPE:
-    printFromInt(atoi(input.c_str()));
+    printFromInt(input);
     break;
   case FLOAT_TYPE:
-    printFromFloat(strtof(input.c_str(), NULL));
+    printFromFloat(input);
     break;
-    char *end;
   case DOUBLE_TYPE:
-    printFromDouble(strtod(input.c_str(), &end));
+    printFromDouble(input);
     break;
   }
 }
