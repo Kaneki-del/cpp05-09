@@ -1,8 +1,6 @@
-
 #ifndef SCALARCONVERTER_HPP
 #define SCALARCONVERTER_HPP
 
-class ScalarConverter;
 #include <cctype>
 #include <cerrno>
 #include <cmath>

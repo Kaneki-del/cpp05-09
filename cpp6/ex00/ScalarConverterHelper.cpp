@@ -29,7 +29,7 @@ void ScalarConverter::printFromChar(char c) {
 void ScalarConverter::printFromInt(std::string input) {
   int num = std::atoi(input.c_str());
 
-  if (std::numeric_limits<char>::min() > num ||
+  if (checkINt(input) || std::numeric_limits<char>::min() > num ||
       std::numeric_limits<char>::max() < num)
     std::cout << "char: impossible" << std::endl;
 
