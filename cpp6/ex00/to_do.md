@@ -1,2 +1,0 @@
-- [ ] check is we need the dote in the casting the char 
-- [ ] handle the overflow 
