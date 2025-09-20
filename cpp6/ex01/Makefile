@@ -2,7 +2,7 @@ NAME      = Bureaucrat
 CC        = c++
 CFLAGS    =  -Wall -Wextra -Werror -std=c++98  -g
 RM        = rm -rf
-SRCS      = ScalarConverter.cpp  main.cpp ScalarConverterHelper.cpp
+SRCS      = Serializer.cpp  main.cpp 
 OBJS      = $(SRCS:.cpp=.o)
 
 all: $(NAME)
@@ -10,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp ScalarConverter.hpp Data.hpp
+%.o: %.cpp Serializer.hpp Data.hpp
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
