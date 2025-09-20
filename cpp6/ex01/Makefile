@@ -10,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp ScalarConverter.hpp
+%.o: %.cpp ScalarConverter.hpp Data.hpp
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:

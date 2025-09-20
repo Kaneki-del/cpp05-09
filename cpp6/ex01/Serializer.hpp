@@ -1,7 +1,6 @@
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
-enum e_type { CHAR, INT, FLOAT, DOUBLE, UNKNOWN };
-
+#include "Data.hpp"
 class Serializer {
 public:
   static uintptr_t serialize(Data *ptr);
