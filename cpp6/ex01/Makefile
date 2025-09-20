@@ -1,4 +1,4 @@
-NAME      = Bureaucrat
+NAME      = Serializer
 CC        = c++
 CFLAGS    =  -Wall -Wextra -Werror -std=c++98  -g
 RM        = rm -rf
