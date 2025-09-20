@@ -1,0 +1,1 @@
+- [ ] check if the ex01 is valid when run it and all the others 
