@@ -1,16 +1,5 @@
 #include "ScalarConverter.hpp"
 
-// e_type trueType(std::string input) {
-//   int error = 0;
-//   long num = std::strtol(input.c_str(), NULL, 10);
-//   if (error == ERANGE)
-//     return DOUBLE;
-//   if (num > std::numeric_limits<int>::max() ||
-//       num < std::numeric_limits<int>::min()) {
-//     return FLOAT;
-//   }
-//   return INT;
-// }
 e_type ScalarConverter::getType(std::string input) {
   if (isChar(input))
     return CHAR;
