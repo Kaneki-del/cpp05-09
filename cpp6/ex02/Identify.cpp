@@ -1,5 +1,4 @@
 #include "Identify.hpp"
-#include <typeinfo>
 
 Base::~Base() {}
 Base *generate(void) {
