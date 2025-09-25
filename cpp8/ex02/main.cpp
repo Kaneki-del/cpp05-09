@@ -9,7 +9,6 @@ int main() {
   mstack.push(3);
   mstack.push(5);
   mstack.push(737);
-  //[...]
   mstack.push(0);
   MutantStack<int>::iterator it = mstack.begin();
   MutantStack<int>::iterator ite = mstack.end();
@@ -20,5 +19,15 @@ int main() {
     ++it;
   }
   std::stack<int> s(mstack);
+   MutantStack<int> test_stack;
+  test_stack.push(100);
+  test_stack.push(200);
+  test_stack.push(300);
+
+  MutantStack<int>::iterator test_it = test_stack.begin();
+  std::cout << "First element: " << *test_it << std::endl;
+  
+  std::cout << "Third element: " << *(--test_stack.end()) << std::endl;
+
   return 0;
 }
