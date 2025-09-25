@@ -6,10 +6,10 @@
 #include <iostream>
 #include <vector>
 
-template <typename T> int easyfind(T c, int i) {
-  if ((std::find(c.begin(), c.end(), i)) == c.end()) {
-    throw std::runtime_error("The occurrence was not found.");
-  }
-  return i;
+template <typename T> typename T::const_iterator easyfind(T &c, int i) {
+  typename T::const_iterator it = std::find(c.begin(), c.end(), i);
+  if (it == c.end())
+    throw std::logic_error("The occurrence was not found.");
+  return it;
 };
 #endif
