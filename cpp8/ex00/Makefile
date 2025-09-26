@@ -1,4 +1,4 @@
-NAME      = Whatever
+NAME      = easyfind
 CC        = c++
 CFLAGS    =  -Wall -Wextra -Werror -std=c++98
 RM        = rm -rf
@@ -10,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp Whatever.hpp
+%.o: %.cpp easyfind.hpp
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
