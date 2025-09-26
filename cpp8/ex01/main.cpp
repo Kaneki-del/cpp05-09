@@ -43,12 +43,11 @@ int main() {
     fullSpan.addNumber(1);
     fullSpan.addNumber(2);
     fullSpan.addNumber(3);
-    fullSpan.addNumber(4); // This should throw an exception
+    fullSpan.addNumber(4);
   } catch (const std::exception &e) {
     std::cerr << "Caught exception (full span): " << e.what() << std::endl;
   }
 
-  // 2. Finding span in an empty Span
   try {
     Span emptySpan(5);
     std::cout << "Shortest Span (empty): " << emptySpan.shortestSpan()
@@ -57,7 +56,6 @@ int main() {
     std::cerr << "Caught exception (empty span): " << e.what() << std::endl;
   }
 
-  // 3. Finding span with one number
   try {
     Span singleSpan(5);
     singleSpan.addNumber(42);

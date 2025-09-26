@@ -1,7 +1,13 @@
 #include "easyfind.hpp"
 
 int main() {
-  std::vector<int> numbers = {10, 20, 30, 40, 50};
+  std::vector<int> numbers;
+  numbers.push_back(10);
+  numbers.push_back(20);
+  numbers.push_back(30);
+  numbers.push_back(40);
+  numbers.push_back(50);
+
   int value_to_find = 50;
 
   try {
