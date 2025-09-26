@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <iostream>
 
 BitcoinExchange::BitcoinExchange() {}
 BitcoinExchange::~BitcoinExchange() {}
@@ -27,7 +28,21 @@ std::string trim(const std::string &str) {
   return str.substr(first, (last - first + 1));
 }
 
-bool isValidDate(const std::string &date) { return true; }
+double BitcoinExchange::getRate(const std::string &date) {
+  std::map<std::string, double>::const_iterator it = exchange_rates.find(date);
+
+  if (it != exchange_rates.end()) {
+    return it->second;
+  }
+  it = exchange_rates.upper_bound(date);
+  if (it == exchange_rates.begin()) {
+    std::cerr << "Warning: No date found before " << date << ". Using rate 0."
+              << std::endl;
+    return 0.0;
+  }
+  it--;
+  return it->second;
+}
 
 void BitcoinExchange::processInputFile(const std::string &input_filename) {
   std::ifstream input(input_filename.c_str());
@@ -47,8 +62,23 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
     std::string value = line.substr(delimiter_pos + 1);
     date = trim(date);
     value = trim(value);
-    double exchange_rate;
-    // exchange_rate = std::stod(rate_str);
-    // this->exchange_rates[date_key] = exchange_rate;
+    double amount;
+    try {
+      amount = std::stod(value);
+
+    } catch (const std::exception &e) {
+      std::cerr << "Error: bad input => " << line << std::endl;
+      return;
+    }
+    if (amount < 0) {
+      std::cerr << "Error: not a positive number." << std::endl;
+      return;
+    }
+    if (amount > 1000) {
+      std::cerr << "Error: too large a number." << std::endl;
+      return;
+    }
+    double result = amount * getRate(date);
+    std::cout << date << "=>" << value << result << std::endl;
   }
 }
