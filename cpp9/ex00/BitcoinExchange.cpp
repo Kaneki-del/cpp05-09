@@ -5,6 +5,16 @@ BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::~BitcoinExchange() {}
 
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : exchange_rates(other.exchange_rates){
+}
+
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &other){
+  if (this != &other) {
+    exchange_rates = other.exchange_rates;
+  }
+  return *this;
+}
+
 std::string trim(const std::string &str) {
   size_t first = str.find_first_not_of(" \t\n\r");
   if (std::string::npos == first) {
