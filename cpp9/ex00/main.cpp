@@ -1,7 +1,7 @@
 #include "BitcoinExchange.hpp"
 
 int main(int argc, char **argv) {
-  (void)argv;
+  // (void)argv;
   if (argc != 2) {
     // TODO print a message show how to use
     return 1;
@@ -12,7 +12,6 @@ int main(int argc, char **argv) {
     btc.processInputFile(argv[1]);
 
   } catch (const std::exception &e) {
-    // Catch database opening error or other fatal errors
     std::cerr << e.what() << std::endl;
     return 1;
   }

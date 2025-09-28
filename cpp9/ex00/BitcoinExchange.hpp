@@ -1,9 +1,15 @@
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
+
+struct splitedStr {
+  std::string strHolder[3];
+};
 
 class BitcoinExchange {
 public:

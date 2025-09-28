@@ -1,0 +1,47 @@
+date | value
+
+# A. Invalid Month and Day Range Check (Must be caught by mktime)
+2023-02-30 | 100       # Invalid Day: Feb 30th (mktime normalization check)
+2024-02-30 | 100       # Invalid Day: Leap year check (2024 is a leap year, max 29 days)
+2023-13-15 | 100       # Invalid Month: Month 13 (should be caught by pre-mktime check)
+2023-04-31 | 100       # Invalid Day: April has only 30 days
+
+# B. Leap Year Boundaries (Must pass)
+2024-02-29 | 100       
+2023-02-29 | 100       
+2000-02-29 | 100       
+1900-02-29 | 100       
+
+# C. Boundary Years (Assuming your minimum year is 2000)
+1999-12-31 | 1         # Invalid Year: Below minimum (assuming min year check)
+2000-01-01 | 1         # Valid Year: At minimum boundary
+
+
+# A. Non-Positive Number Check
+2012-01-11 | -1.5      
+
+# B. Too Large Number Check
+2012-01-11 | 1000.01   # Error: Just over the 1000 limit
+2012-01-11 | 2147483648 # Error: Very large number (will fail range 1000 check, and may cause floating point issues)
+
+# C. Invalid Numeric Format (Testing strtod / try-catch)
+2011-00-01 | 1.2.3     
+2011-01-01 | 500abc    
+2011-01-01 | +50       
+2011-01-01 | -50       
+
+# --- 3. Format and Delimiter Errors ---
+
+# A. Bad Input - Missing Pipe
+2011-01-01 50          
+
+# B. Bad Input - Multiple Delimiters (The 3 | issue)
+2011-01-01 | 50 | 1   
+
+# C. Bad Input - Trailing Whitespace (Testing your trim)
+2011-01-01  | 50     
+2011-01-01| 50       
+
+# --- 4. Valid Cases (Final sanity check) ---
+2011-01-01 | 10
+2012-01-01 | 500
