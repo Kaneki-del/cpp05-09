@@ -22,10 +22,8 @@ bool RPN::doAdd() {
       << std::endl;
     return false;
   }
-  long long B = st.top();
-  st.pop();
-  long long A = st.top();
-  st.pop();
+  long long B = st.top(); st.pop();
+  long long A = st.top(); st.pop();
 
   if ((B > 0 && A > (std::numeric_limits<long long>::max() - B)) ||
       (B < 0 && A < (std::numeric_limits<long long>::min() - B))) {
@@ -43,10 +41,9 @@ bool RPN::doSubtract() {
       << std::endl;
     return false;
   }
-  long long B = st.top();
-  st.pop();
-  long long A = st.top();
-  st.pop();
+  long long B = st.top(); st.pop();
+  long long A = st.top(); st.pop();
+
   if ((B < 0 && A > std::numeric_limits<long long>::max() + B) ||
       (B > 0 && A < std::numeric_limits<long long>::min() + B)) {
     std::cerr << "Error: Subtraction resulted in overflow or underflow."
@@ -63,10 +60,8 @@ bool RPN::doMultiply(){
     return false;
   }
 
-  long long B = st.top();
-  st.pop();
-  long long A = st.top();
-  st.pop();
+  long long B = st.top(); st.pop();
+  long long A = st.top(); st.pop();
   if (A != 0 && B != 0 &&
       ((A > 0 && B > 0 && A > (std::numeric_limits<long long>::max() / B)) ||
        (A < 0 && B < 0 && A < (std::numeric_limits<long long>::max() / B)) ||
@@ -86,12 +81,10 @@ bool RPN::doDiv(){
       << std::endl;
     return false;
   }
-  long long B = st.top();
-  st.pop();
-  long long A = st.top();
-  st.pop();
+  long long B = st.top(); st.pop();
+  long long A = st.top(); st.pop();
   if (B == 0){
-    std::cerr << "ERROR: cant devide on 0" << std::endl;
+    std::cerr << "ERROR: can not devide on 0" << std::endl;
     return false;
   }
   st.push(A / B);
@@ -100,54 +93,43 @@ bool RPN::doDiv(){
 }
 
 bool RPN::processInput(const std::string &input) {
-    std::stringstream ss(input);
-    std::string segment;
-    
-    while (std::getline(ss, segment, ' ')) {
-        if (segment.empty())
-            continue; 
-        if (segment.length() == 1) {
-            char token = segment[0];
+  std::stringstream ss(input);
+  std::string segment;
 
-            if (token >= '0' && token <= '9') {
-                st.push(token - '0');
-            } 
-            else if (token == '+') {
-                if (!doAdd()) return false;
-            } 
-            else if (token == '-') {
-                if (!doSubtract()) return false;
-            }
-            else if (token == '*') {
-                if (!doMultiply()) return false;
-            }
-            else if (token == '/') {
-                if (!doDiv()) return false;
-            }
-            else {
-                std::cerr << "Error: Invalid single-character token." << std::endl;
-                return false;
-            }
-        } 
-        else if (segment.length() == 2) {
-            if (segment[0] == '-' && (segment[1] >= '1' && segment[1] <= '9')) {
-                int value = -(segment[1] - '0');
-                st.push(value);
-            } 
-            else {
-                std::cerr << "Error: Invalid multi-character token format (must be negative digit)." << std::endl;
-                return false;
-            }
-        }
-        else {
-            std::cerr << "Error: Invalid token length or format (must be 1 or 2)." << std::endl;
-            return false;
-        }
+  while (std::getline(ss, segment, ' ')) {
+    if (segment.empty())
+      continue; 
+    if (segment.length() != 1) { 
+      std::cerr << "Error: Invalid token length. Numbers must be single digits (0-9)." << std::endl;
+      return false; 
     }
-    if (st.size() != 1) {
-        std::cerr << "Error: Invalid RPN expression. Stack must contain exactly one result." << std::endl;
-        return false;
+
+    char token = segment[0];
+
+    if (token >= '0' && token <= '9') {
+      st.push(token - '0');
+    } 
+    else if (token == '+') {
+      if (!doAdd()) return false;
+    } 
+    else if (token == '-') {
+      if (!doSubtract()) return false;
     }
-    
-    return true;
+    else if (token == '*') {
+      if (!doMultiply()) return false;
+    }
+    else if (token == '/') {
+      if (!doDiv()) return false;
+    }
+    else {
+      std::cerr << "Error: Invalid single-character token." << std::endl;
+      return false;
+    }
+  } 
+  if (st.size() != 1) {
+    std::cerr << "Error: Invalid RPN expression. Stack must contain exactly one result." << std::endl;
+    return false;
+  }
+
+  return true;
 }
