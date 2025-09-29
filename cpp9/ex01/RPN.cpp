@@ -104,31 +104,43 @@ bool RPN::processInput(const std::string &input) {
     std::string segment;
     
     while (std::getline(ss, segment, ' ')) {
-        if (segment.empty()) {
-            continue;
-        }
-        if (segment.length() != 1) {
-            std::cerr << "Error: Invalid token format" << std::endl;
-            return false;
-        }
-        char token = segment[0];
-        if (token >= '0' && token <= '9') {
-            st.push(token - '0');
+        if (segment.empty())
+            continue; 
+        if (segment.length() == 1) {
+            char token = segment[0];
+
+            if (token >= '0' && token <= '9') {
+                st.push(token - '0');
+            } 
+            else if (token == '+') {
+                if (!doAdd()) return false;
+            } 
+            else if (token == '-') {
+                if (!doSubtract()) return false;
+            }
+            else if (token == '*') {
+                if (!doMultiply()) return false;
+            }
+            else if (token == '/') {
+                if (!doDiv()) return false;
+            }
+            else {
+                std::cerr << "Error: Invalid single-character token." << std::endl;
+                return false;
+            }
         } 
-        else if (token == '+') {
-            if (!doAdd()) return false;
-        } 
-        else if (token == '-') {
-            if (!doSubtract()) return false;
+        else if (segment.length() == 2) {
+            if (segment[0] == '-' && (segment[1] >= '1' && segment[1] <= '9')) {
+                int value = -(segment[1] - '0');
+                st.push(value);
+            } 
+            else {
+                std::cerr << "Error: Invalid multi-character token format (must be negative digit)." << std::endl;
+                return false;
+            }
         }
-        else if (token == '*') {
-            if (!doMultiply()) return false;
-        }
-        else if (token == '/') {
-            if (!doDiv()) return false;
-        } 
         else {
-            std::cerr << "Error: Invalid character token." << std::endl;
+            std::cerr << "Error: Invalid token length or format (must be 1 or 2)." << std::endl;
             return false;
         }
     }
@@ -136,5 +148,6 @@ bool RPN::processInput(const std::string &input) {
         std::cerr << "Error: Invalid RPN expression. Stack must contain exactly one result." << std::endl;
         return false;
     }
+    
     return true;
 }
