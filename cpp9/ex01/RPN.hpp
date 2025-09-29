@@ -14,11 +14,10 @@ public:
   ~RPN();
   RPN(const RPN &other);
   RPN &operator=(const RPN &other);
-  void processInput(const std::string &input);
-  // RPN::RPN() { std::string & input };
+  bool processInput(const std::string &input);
+  long long getTopValue();
 
 private:
-  // bool isValidValue(int value);
   bool doAdd();
   bool doSubtract();
   bool doMultiply();
