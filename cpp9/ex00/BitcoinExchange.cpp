@@ -5,10 +5,10 @@ BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::~BitcoinExchange() {}
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) : exchange_rates(other.exchange_rates){
-}
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
+    : exchange_rates(other.exchange_rates) {}
 
-BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &other){
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
   if (this != &other) {
     exchange_rates = other.exchange_rates;
   }
@@ -157,6 +157,7 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
 
     value = trim(value);
     double amount = std::strtod(value.c_str(), &endptr);
+
     if (endptr == value.c_str() || *endptr != '\0' || errno == ERANGE) {
       std::cerr << "Error: bad input (invalid amount format) => " << line
                 << std::endl;
@@ -165,14 +166,14 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
 
     if (amount < 0) {
       std::cerr << "Error: not a positive number." << std::endl;
-      return;
+      continue;
     }
 
     if (amount > 1000) {
       std::cerr << "Error: too large a number." << std::endl;
-      return;
+      continue;
     }
     double result = amount * getRate(date);
-    std::cout << date << "=>" << value << result << std::endl;
+    std::cout << date << " => " << value << " = " << result << std::endl;
   }
 }
