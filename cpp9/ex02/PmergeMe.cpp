@@ -15,13 +15,32 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
   }
   return *this;
 }
+int PmergeMe::getJacobsthalNumber(int n) {
+
+  if (n == 0)
+
+    return 0;
+
+  if (n == 1)
+
+    return 1;
+
+  return getJacobsthalNumber(n - 1) + 2 * getJacobsthalNumber(n - 2);
+}
 
 void PmergeMe::sortVector() {
-  // first check the size if not pair to remove the last element and have it
-  // ther
-  //  sort the pairs that explained from the guide  by swaping theme
-  //  split the the smal one and the largest one in two container
-  //  generate the squenece and try to implement the insertion
+  long leftOver = -1;
+  std::vector<long> largest;
+  std::vector<long> lowest;
+  if (_vectorSequence.size() % 2 != 0) {
+    leftOver = _vectorSequence.back();
+    _vectorSequence.pop_back();
+  }
+  for (unsigned long i = 1; i < _vectorSequence.size(); i += 2) {
+    if (_vectorSequence[i - 1] < _vectorSequence[i])
+      std::swap(_vectorSequence[i - 1], _vectorSequence[i]);
+  }
+  displaySequence(_vectorSequence, "After: ");
 }
 
 long PmergeMe::parseAndValidate(const std::string &str) {

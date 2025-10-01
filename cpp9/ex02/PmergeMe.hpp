@@ -26,6 +26,28 @@ public:
     }
     std::cout << std::endl;
   }
+  template <typename Container>
+
+  Container generateJacobsthalSequence(std::size_t lent) {
+
+    Container sequence;
+
+    for (size_t i = 2; i < lent; i++) {
+
+      size_t jacob = getJacobsthalNumber(i);
+
+      if (jacob > lent) {
+
+        sequence.push_back(jacob);
+
+        break;
+      }
+
+      sequence.push_back(jacob);
+    }
+
+    return sequence;
+  }
 
 private:
   std::vector<long> _vectorSequence;
@@ -33,6 +55,7 @@ private:
   long parseAndValidate(const std::string &num);
   void sortVector();
   void sortDeque();
+  int getJacobsthalNumber(int n);
 };
 void displayUsage();
 #endif
