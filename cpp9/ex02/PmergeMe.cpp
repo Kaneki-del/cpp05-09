@@ -88,6 +88,69 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
 
   contains = largest;
 }
+//////////////////////////////////////////
+void PmergeMe::sortDeque(std::deque<long> &contains) {
+  long leftOver = -1;
+  std::deque<long long> index;
+  std::deque<long> largest;
+  std::deque<long> lowest;
+
+  for (unsigned long i = 1; i < contains.size(); i += 2) {
+    if (contains[i - 1] < contains[i])
+      std::swap(contains[i - 1], contains[i]);
+  }
+
+  if (contains.size() % 2 != 0) {
+    leftOver = contains.back();
+    contains.pop_back();
+  }
+
+  for (unsigned long i = 1; i < contains.size(); i += 2) {
+    largest.push_back(contains[i - 1]);
+    lowest.push_back(contains[i]);
+  }
+
+  if (largest.size() >= 2)
+    sortDeque(largest);
+
+  if (!lowest.empty()) {
+    largest.insert(largest.begin(), lowest.front());
+    lowest.erase(lowest.begin());
+  }
+
+  std::deque<long long> jacob_sequence =
+      generateJacobsthalSequence<std::deque<long long>>(lowest.size());
+
+  index = generateindex<std::deque<long long>>(jacob_sequence);
+
+  for (unsigned long i = 0; i < index.size(); i++) {
+    long long calculated_index_ll = index[i] - 2;
+
+    if (calculated_index_ll < 0)
+      continue;
+
+    std::size_t calculated_index =
+        static_cast<std::size_t>(calculated_index_ll);
+
+    if (calculated_index >= lowest.size())
+      continue;
+
+    long value_to_insert = lowest[calculated_index];
+
+    std::deque<long>::iterator insert_pos =
+        std::lower_bound(largest.begin(), largest.end(), value_to_insert);
+
+    largest.insert(insert_pos, value_to_insert);
+  }
+
+  if (leftOver != -1) {
+    auto insert_pos =
+        std::lower_bound(largest.begin(), largest.end(), leftOver);
+    largest.insert(insert_pos, leftOver);
+  }
+
+  contains = largest;
+}
 
 long PmergeMe::parseAndValidate(const std::string &str) {
   const char *nptr = str.c_str();
@@ -97,6 +160,9 @@ long PmergeMe::parseAndValidate(const std::string &str) {
 
   if (endptr == nptr) {
     throw std::invalid_argument("Error: Input is not a valid number.");
+  }
+  while (*endptr != '\0' && std::isspace(*endptr)) {
+    endptr++;
   }
   if (*endptr != '\0') {
     throw std::invalid_argument(
@@ -122,13 +188,13 @@ void PmergeMe::processSequence(char **av, int count) {
     long num = parseAndValidate(av[i]);
     initialSequence.push_back(num);
   }
-  // displaySequence(initialSequence, "Before: ");
 
   _vectorSequence.assign(initialSequence.begin(), initialSequence.end());
   _dequeSequence.assign(initialSequence.begin(), initialSequence.end());
 
-  displaySequence(_vectorSequence, "Before: ");
   sortVector(_vectorSequence);
+  sortDeque(_dequeSequence);
+  displaySequence(_vectorSequence, "After: ");
   displaySequence(_vectorSequence, "After: ");
 }
 
