@@ -40,7 +40,13 @@ void PmergeMe::sortVector() {
     if (_vectorSequence[i - 1] < _vectorSequence[i])
       std::swap(_vectorSequence[i - 1], _vectorSequence[i]);
   }
-  displaySequence(_vectorSequence, "After: ");
+  displaySequence(_vectorSequence, "after: ");
+  for (unsigned long i = 1; i < _vectorSequence.size(); i += 2) {
+    largest.push_back(_vectorSequence[i - 1]);
+    lowest.push_back(_vectorSequence[i]);
+  }
+  displaySequence(largest, "largest: ");
+  displaySequence(lowest, "lowest: ");
 }
 
 long PmergeMe::parseAndValidate(const std::string &str) {
