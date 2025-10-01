@@ -45,8 +45,8 @@ public:
     }
     return sequence;
   }
-  template <typename Container> Container generateindex(Container sequence) {
 
+  template <typename Container> Container generateindex(Container sequence) {
     Container index;
     index.push_back(3);
     index.push_back(2);
