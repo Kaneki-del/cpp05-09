@@ -26,52 +26,67 @@ int PmergeMe::getJacobsthalNumber(int n) {
   return getJacobsthalNumber(n - 1) + 2 * getJacobsthalNumber(n - 2);
 }
 
-void PmergeMe::sortVector() {
+void PmergeMe::sortVector(std::vector<long> &contains) {
   long leftOver = -1;
-  std::vector<long> largest;
   std::vector<long long> index;
+  std::vector<long> largest;
   std::vector<long> lowest;
-  if (_vectorSequence.size() % 2 != 0) {
-    leftOver = _vectorSequence.back();
-    _vectorSequence.pop_back();
-  }
-  for (unsigned long i = 1; i < _vectorSequence.size(); i += 2) {
-    if (_vectorSequence[i - 1] < _vectorSequence[i])
-      std::swap(_vectorSequence[i - 1], _vectorSequence[i]);
+
+  for (unsigned long i = 1; i < contains.size(); i += 2) {
+    if (contains[i - 1] < contains[i])
+      std::swap(contains[i - 1], contains[i]);
   }
 
-  // displaySequence(_vectorSequence, "after: ");
-  for (unsigned long i = 1; i < _vectorSequence.size(); i += 2) {
-    largest.push_back(_vectorSequence[i - 1]);
-    lowest.push_back(_vectorSequence[i]);
+  if (contains.size() % 2 != 0) {
+    leftOver = contains.back();
+    contains.pop_back();
   }
+
+  for (unsigned long i = 1; i < contains.size(); i += 2) {
+    largest.push_back(contains[i - 1]);
+    lowest.push_back(contains[i]);
+  }
+
+  if (largest.size() >= 2)
+    sortVector(largest);
+
+  if (!lowest.empty()) {
+    largest.insert(largest.begin(), lowest.front());
+    lowest.erase(lowest.begin());
+  }
+
   std::vector<long long> jacob_sequence =
       generateJacobsthalSequence<std::vector<long long>>(lowest.size());
 
-  // displaySequence(jacob_sequence, "sequence: ");
   index = generateindex<std::vector<long long>>(jacob_sequence);
-  displaySequence(index, "index: ");
-  largest.insert(largest.begin(), lowest.front());
-  // lowest.erase(lowest.begin());
-  // displaySequence(largest, "largest: ");
-  displaySequence(lowest, "lowest: ");
 
   for (unsigned long i = 0; i < index.size(); i++) {
-    long long calculated_index_ll = index[i] - 1;
+    long long calculated_index_ll = index[i] - 2;
+
+    if (calculated_index_ll < 0)
+      continue;
 
     std::size_t calculated_index =
         static_cast<std::size_t>(calculated_index_ll);
+
     if (calculated_index >= lowest.size())
       continue;
+
     long value_to_insert = lowest[calculated_index];
-    std::cout << "index :" << index[i] - 1 << std::endl;
-    std::cout << "Value to insert: " << value_to_insert << std::endl;
+
     std::vector<long>::iterator insert_pos =
         std::lower_bound(largest.begin(), largest.end(), value_to_insert);
+
     largest.insert(insert_pos, value_to_insert);
   }
-  displaySequence(largest, "largest: ");
-  displaySequence(lowest, "lowest: ");
+
+  if (leftOver != -1) {
+    auto insert_pos =
+        std::lower_bound(largest.begin(), largest.end(), leftOver);
+    largest.insert(insert_pos, leftOver);
+  }
+
+  contains = largest;
 }
 
 long PmergeMe::parseAndValidate(const std::string &str) {
@@ -112,7 +127,9 @@ void PmergeMe::processSequence(char **av, int count) {
   _vectorSequence.assign(initialSequence.begin(), initialSequence.end());
   _dequeSequence.assign(initialSequence.begin(), initialSequence.end());
 
-  sortVector();
+  displaySequence(_vectorSequence, "Before: ");
+  sortVector(_vectorSequence);
+  displaySequence(_vectorSequence, "After: ");
 }
 
 void displayUsage() {
