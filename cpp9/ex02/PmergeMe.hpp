@@ -63,7 +63,7 @@ private:
   std::deque<long> _dequeSequence;
   long parseAndValidate(const std::string &num);
   void sortVector(std::vector<long> &contains);
-  void sortDeque(std::deque<long> &contains);
+  void sortDeque();
   int getJacobsthalNumber(int n);
 };
 void displayUsage();
