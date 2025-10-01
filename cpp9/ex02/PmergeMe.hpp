@@ -27,12 +27,11 @@ public:
     std::cout << std::endl;
   }
   template <typename Container>
-
   Container generateJacobsthalSequence(std::size_t lent) {
 
     Container sequence;
 
-    for (size_t i = 2; i < lent; i++) {
+    for (size_t i = 3; i < lent; i++) {
 
       size_t jacob = getJacobsthalNumber(i);
 
@@ -42,11 +41,21 @@ public:
 
         break;
       }
-
       sequence.push_back(jacob);
     }
-
     return sequence;
+  }
+  template <typename Container> Container generateindex(Container sequence) {
+
+    Container index;
+    index.push_back(3);
+    index.push_back(2);
+    for (unsigned long i = 1; i < sequence.size(); i++) {
+      for (long y = sequence[i]; y > sequence[i - 1]; y--) {
+        index.push_back(y);
+      }
+    }
+    return index;
   }
 
 private:

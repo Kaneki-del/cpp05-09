@@ -18,11 +18,9 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
 int PmergeMe::getJacobsthalNumber(int n) {
 
   if (n == 0)
-
     return 0;
 
   if (n == 1)
-
     return 1;
 
   return getJacobsthalNumber(n - 1) + 2 * getJacobsthalNumber(n - 2);
@@ -31,6 +29,7 @@ int PmergeMe::getJacobsthalNumber(int n) {
 void PmergeMe::sortVector() {
   long leftOver = -1;
   std::vector<long> largest;
+  std::vector<long long> index;
   std::vector<long> lowest;
   if (_vectorSequence.size() % 2 != 0) {
     leftOver = _vectorSequence.back();
@@ -45,8 +44,14 @@ void PmergeMe::sortVector() {
     largest.push_back(_vectorSequence[i - 1]);
     lowest.push_back(_vectorSequence[i]);
   }
-  displaySequence(largest, "largest: ");
-  displaySequence(lowest, "lowest: ");
+  // displaySequence(largest, "largest: ");
+  // displaySequence(lowest, "lowest: ");
+  std::vector<long long> jacob_sequence =
+      generateJacobsthalSequence<std::vector<long long>>(lowest.size());
+
+  displaySequence(jacob_sequence, "sequence: ");
+  index = generateindex<std::vector<long long>>(jacob_sequence);
+  displaySequence(index, "index: ");
 }
 
 long PmergeMe::parseAndValidate(const std::string &str) {
