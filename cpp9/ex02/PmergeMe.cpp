@@ -27,11 +27,16 @@ int PmergeMe::getJacobsthalNumber(int n) {
 }
 
 void PmergeMe::sortVector(std::vector<long> &contains) {
+
   long leftOver = -1;
   std::vector<long long> index;
   std::vector<long> largest;
   std::vector<long> lowest;
 
+  largest.clear();
+  lowest.clear();
+
+  // sorting pears
   for (unsigned long i = 1; i < contains.size(); i += 2) {
     if (contains[i - 1] < contains[i])
       std::swap(contains[i - 1], contains[i]);
@@ -39,7 +44,7 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
 
   if (contains.size() % 2 != 0) {
     leftOver = contains.back();
-    contains.pop_back();
+    // contains.pop_back();
   }
 
   for (unsigned long i = 1; i < contains.size(); i += 2) {
@@ -50,34 +55,35 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
   if (largest.size() >= 2)
     sortVector(largest);
 
-  if (!lowest.empty()) {
-    largest.insert(largest.begin(), lowest.front());
-    lowest.erase(lowest.begin());
-  }
+  if (lowest.size() == 1) {
+    largest.insert(std::lower_bound(largest.begin(), largest.end(), lowest[0]),
+                   lowest[0]);
+  } else {
+    std::vector<long long> jacob_sequence =
+        generateJacobsthalSequence<std::vector<long long>>(lowest.size() +
+                                                           largest.size());
+    index = generateindex<std::vector<long long>>(jacob_sequence);
 
-  std::vector<long long> jacob_sequence =
-      generateJacobsthalSequence<std::vector<long long>>(lowest.size());
+    largest.insert(std::lower_bound(largest.begin(), largest.end(), lowest[0]),
+                   lowest[0]);
 
-  index = generateindex<std::vector<long long>>(jacob_sequence);
+    for (unsigned long i = 0; i < index.size(); i++) {
+      long long calculated_index_ll = index[i] - 1;
 
-  for (unsigned long i = 0; i < index.size(); i++) {
-    long long calculated_index_ll = index[i] - 2;
+      std::size_t calculated_index =
+          static_cast<std::size_t>(calculated_index_ll);
 
-    if (calculated_index_ll < 0)
-      continue;
+      if (calculated_index >= lowest.size()) {
+        continue;
+      }
 
-    std::size_t calculated_index =
-        static_cast<std::size_t>(calculated_index_ll);
+      long value_to_insert = lowest[calculated_index];
 
-    if (calculated_index >= lowest.size())
-      continue;
+      std::vector<long>::iterator insert_pos =
+          std::lower_bound(largest.begin(), largest.end(), value_to_insert);
 
-    long value_to_insert = lowest[calculated_index];
-
-    std::vector<long>::iterator insert_pos =
-        std::lower_bound(largest.begin(), largest.end(), value_to_insert);
-
-    largest.insert(insert_pos, value_to_insert);
+      largest.insert(insert_pos, value_to_insert);
+    }
   }
 
   if (leftOver != -1) {
@@ -116,6 +122,7 @@ long PmergeMe::parseAndValidate(const std::string &str) {
   }
   return amount;
 }
+
 void PmergeMe::processSequence(char **av, int count) {
   std::vector<long> initialSequence;
   for (int i = 0; i < count; ++i) {
@@ -129,7 +136,6 @@ void PmergeMe::processSequence(char **av, int count) {
 
   // displaySequence(_vectorSequence, "Before: ");
   sortVector(_vectorSequence);
-  _vectorSequence.push_back(-1);
   displaySequence(_vectorSequence, "After: ");
 }
 
