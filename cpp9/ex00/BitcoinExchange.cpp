@@ -83,7 +83,9 @@ bool BitcoinExchange::isValidDate(const std::string &date) {
   if (i != 3 || !ss.eof())
     return false;
   long year, month, day;
-
+  if (splitedDate[0].length > 4 || splitedDate[1].length > 2 ||
+      splitedDate[2].length > 2)
+    return false;
   year = std::strtol(splitedDate.strHolder[0].c_str(), &endptr, 10);
   if (*endptr != '\0' || year < 2000)
     return false;
@@ -174,6 +176,12 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
       continue;
     }
     double result = amount * getRate(date);
+    if (result == HUGE_VAL || result == -HUGE_VAL) {
+      std::cerr
+          << "Error: Calculated value overflowed the maximum double limit."
+          << std::endl;
+      continue;
+    }
     std::cout << date << " => " << value << " = " << result << std::endl;
   }
 }
