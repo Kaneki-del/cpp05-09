@@ -42,7 +42,7 @@ BitcoinExchange::BitcoinExchange(const std::string &db_filename) {
     std::string date_key = line.substr(0, delimiter_pos);
     std::string rate_str = line.substr(delimiter_pos + 1);
     double exchange_rate;
-    exchange_rate = std::stod(rate_str);
+    exchange_rate = std::strtod(rate_str.c_str(), NULL);
     this->exchange_rates[date_key] = exchange_rate;
   }
 }
