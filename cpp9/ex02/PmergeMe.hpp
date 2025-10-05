@@ -3,9 +3,11 @@
 
 #include <cerrno>
 #include <deque>
+#include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <limits>
+#include <sys/time.h>
 #include <vector>
 
 class PmergeMe {
@@ -63,7 +65,7 @@ private:
   std::deque<long> _dequeSequence;
   long parseAndValidate(const std::string &num);
   void sortVector(std::vector<long> &contains);
-  void sortDeque();
+  void sortDeque(std::deque<long> &contains);
   int getJacobsthalNumber(int n);
 };
 void displayUsage();
