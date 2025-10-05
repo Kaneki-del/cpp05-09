@@ -1,17 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sait-nac <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 14:28:15 by sait-nac          #+#    #+#             */
-/*   Updated: 2025/10/05 14:57:22 by sait-nac         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-#include <vector>
 
 PmergeMe::PmergeMe() {}
 PmergeMe::~PmergeMe() {}
@@ -72,9 +60,9 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
                    lowest[0]);
   } else {
     std::vector<long long> jacob_sequence =
-        generateJacobsthalSequence<std::vector<long long>>(lowest.size() +
+        generateJacobsthalSequence<std::vector<long long> >(lowest.size() +
                                                            largest.size());
-    index = generateindex<std::vector<long long>>(jacob_sequence);
+    index = generateindex<std::vector<long long> >(jacob_sequence);
 
     largest.insert(std::lower_bound(largest.begin(), largest.end(), lowest[0]),
                    lowest[0]);
@@ -99,7 +87,7 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
   }
 
   if (leftOver != -1) {
-    auto insert_pos =
+    std::vector<long>::iterator insert_pos =
         std::lower_bound(largest.begin(), largest.end(), leftOver);
     largest.insert(insert_pos, leftOver);
   }
@@ -141,9 +129,9 @@ void PmergeMe::sortDeque(std::deque<long> &contains) {
                    lowest[0]);
   } else {
     std::deque<long long> jacob_sequence =
-        generateJacobsthalSequence<std::deque<long long>>(lowest.size() +
+        generateJacobsthalSequence<std::deque<long long> >(lowest.size() +
                                                           largest.size());
-    index = generateindex<std::deque<long long>>(jacob_sequence);
+    index = generateindex<std::deque<long long> >(jacob_sequence);
 
     largest.insert(std::lower_bound(largest.begin(), largest.end(), lowest[0]),
                    lowest[0]);
@@ -168,7 +156,7 @@ void PmergeMe::sortDeque(std::deque<long> &contains) {
   }
 
   if (leftOver != -1) {
-    auto insert_pos =
+    std::deque<long>::iterator insert_pos =
         std::lower_bound(largest.begin(), largest.end(), leftOver);
     largest.insert(insert_pos, leftOver);
   }

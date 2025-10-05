@@ -9,6 +9,7 @@
 #include <limits>
 #include <sys/time.h>
 #include <vector>
+#include <cstdlib>
 
 class PmergeMe {
 public:
