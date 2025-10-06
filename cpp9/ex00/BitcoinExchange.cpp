@@ -86,7 +86,7 @@ bool BitcoinExchange::isValidDate(const std::string &date) {
 
   year = std::strtol(splitedDate.strHolder[0].c_str(), &endptr, 10);
 
-  if (*endptr != '\0' || year < 2000)
+  if (*endptr != '\0' || year < 2009)
     return false;
 
   month = std::strtol(splitedDate.strHolder[1].c_str(), &endptr, 10);
@@ -115,7 +115,7 @@ bool BitcoinExchange::isValidDate(const std::string &date) {
     return false;
   }
 
-  if (time_struct.tm_year + 1900 < 2000) {
+  if (time_struct.tm_year + 1900 < 2009) {
     return false;
   }
 
@@ -148,8 +148,8 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
     }
     std::string date = line.substr(0, delimiter_pos);
     std::string value = line.substr(delimiter_pos + 1);
-    date = trim(date);
 
+    date = trim(date);
     if (!isValidDate(date)) {
       std::cerr << "Error: bad input (invalid date) => " << date << std::endl;
       continue;

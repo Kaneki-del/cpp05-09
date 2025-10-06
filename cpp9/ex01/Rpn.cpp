@@ -1,5 +1,4 @@
 #include "Rpn.hpp"
-#include <limits>
 
 Rpn::Rpn() {}
 
@@ -15,7 +14,7 @@ Rpn &Rpn::operator=(const Rpn &other) {
 
 int Rpn::getTopValue() { return st.top(); }
 
-long checkOverFlow(long result) {
+long Rpn::checkOverFlow(long result) {
   if (result > std::numeric_limits<int>::max() ||
       result < std::numeric_limits<int>::min())
     throw std::out_of_range(
@@ -66,9 +65,9 @@ void Rpn::doDiv() {
     throw std::invalid_argument(
         "Error: Operation requires two numbers on the stack.");
   }
-  long long B = st.top();
+  long B = st.top();
   st.pop();
-  long long A = st.top();
+  long A = st.top();
   st.pop();
   if (B == 0) {
     throw std::invalid_argument("Error: Cannot divide by zero.");
@@ -79,7 +78,6 @@ void Rpn::doDiv() {
 void Rpn::processInput(const std::string &input) {
   std::stringstream ss(input);
   std::string segment;
-
   while (std::getline(ss, segment, ' ')) {
     if (segment.empty())
       continue;
