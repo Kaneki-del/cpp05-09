@@ -26,12 +26,12 @@ int PmergeMe::getJacobsthalNumber(int n) {
   return getJacobsthalNumber(n - 1) + 2 * getJacobsthalNumber(n - 2);
 }
 
-void PmergeMe::sortVector(std::vector<long> &contains) {
+void PmergeMe::sortVector(std::vector<int> &contains) {
 
   long leftOver = -1;
   std::vector<long long> index;
-  std::vector<long> largest;
-  std::vector<long> lowest;
+  std::vector<int> largest;
+  std::vector<int> lowest;
 
   largest.clear();
   lowest.clear();
@@ -79,7 +79,7 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
 
       long value_to_insert = lowest[calculated_index];
 
-      std::vector<long>::iterator insert_pos =
+      std::vector<int>::iterator insert_pos =
           std::lower_bound(largest.begin(), largest.end(), value_to_insert);
 
       largest.insert(insert_pos, value_to_insert);
@@ -87,7 +87,7 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
   }
 
   if (leftOver != -1) {
-    std::vector<long>::iterator insert_pos =
+    std::vector<int>::iterator insert_pos =
         std::lower_bound(largest.begin(), largest.end(), leftOver);
     largest.insert(insert_pos, leftOver);
   }
@@ -95,12 +95,12 @@ void PmergeMe::sortVector(std::vector<long> &contains) {
   contains = largest;
 }
 
-void PmergeMe::sortDeque(std::deque<long> &contains) {
+void PmergeMe::sortDeque(std::deque<int> &contains) {
 
   long leftOver = -1;
   std::deque<long long> index;
-  std::deque<long> largest;
-  std::deque<long> lowest;
+  std::deque<int> largest;
+  std::deque<int> lowest;
 
   largest.clear();
   lowest.clear();
@@ -148,7 +148,7 @@ void PmergeMe::sortDeque(std::deque<long> &contains) {
 
       long value_to_insert = lowest[calculated_index];
 
-      std::deque<long>::iterator insert_pos =
+      std::deque<int>::iterator insert_pos =
           std::lower_bound(largest.begin(), largest.end(), value_to_insert);
 
       largest.insert(insert_pos, value_to_insert);
@@ -156,7 +156,7 @@ void PmergeMe::sortDeque(std::deque<long> &contains) {
   }
 
   if (leftOver != -1) {
-    std::deque<long>::iterator insert_pos =
+    std::deque<int>::iterator insert_pos =
         std::lower_bound(largest.begin(), largest.end(), leftOver);
     largest.insert(insert_pos, leftOver);
   }
@@ -207,7 +207,7 @@ void PmergeMe::processSequence(char **av, int count) {
   struct timeval end_vec;
   struct timeval start_deque;
   struct timeval end_deque;
-  std::vector<long> initialSequence;
+  std::vector<int> initialSequence;
   for (int i = 0; i < count; ++i) {
     long num = parseAndValidate(av[i]);
     initialSequence.push_back(num);
