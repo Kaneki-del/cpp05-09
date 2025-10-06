@@ -83,10 +83,9 @@ bool BitcoinExchange::isValidDate(const std::string &date) {
   if (i != 3 || !ss.eof())
     return false;
   long year, month, day;
-  if (splitedDate[0].length > 4 || splitedDate[1].length > 2 ||
-      splitedDate[2].length > 2)
-    return false;
+
   year = std::strtol(splitedDate.strHolder[0].c_str(), &endptr, 10);
+
   if (*endptr != '\0' || year < 2000)
     return false;
 
@@ -133,7 +132,6 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
 
   std::string line;
   char *endptr;
-  errno = 0;
 
   std::getline(input, line);
 
@@ -158,6 +156,7 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
     }
 
     value = trim(value);
+    errno = 0;
     double amount = std::strtod(value.c_str(), &endptr);
 
     if (endptr == value.c_str() || *endptr != '\0' || errno == ERANGE) {
