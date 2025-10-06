@@ -64,7 +64,7 @@ public:
 private:
   std::vector<int> _vectorSequence;
   std::deque<int> _dequeSequence;
-  long parseAndValidate(const std::string &num);
+  int parseAndValidate(const std::string &num);
   void sortVector(std::vector<int> &contains);
   void sortDeque(std::deque<int> &contains);
   int getJacobsthalNumber(int n);

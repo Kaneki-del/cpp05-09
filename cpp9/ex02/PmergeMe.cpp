@@ -164,7 +164,7 @@ void PmergeMe::sortDeque(std::deque<int> &contains) {
   contains = largest;
 }
 
-long PmergeMe::parseAndValidate(const std::string &str) {
+int PmergeMe::parseAndValidate(const std::string &str) {
   const char *nptr = str.c_str();
   char *endptr;
   errno = 0;
@@ -173,10 +173,14 @@ long PmergeMe::parseAndValidate(const std::string &str) {
   if (endptr == nptr) {
     throw std::invalid_argument("Error: Input is not a valid number.");
   }
+  while (*endptr != '\0' && std::isspace(*endptr)) {
+    endptr++;
+  }
   if (*endptr != '\0') {
     throw std::invalid_argument(
         "Error: Input contains non-numeric characters.");
   }
+
   if (errno == ERANGE) {
     throw std::out_of_range(
         "Error: Number exceeds the system's long integer range.");
@@ -189,7 +193,7 @@ long PmergeMe::parseAndValidate(const std::string &str) {
     throw std::out_of_range(
         "Error: Number exceeds the allowed max integer value (INT_MAX).");
   }
-  return amount;
+  return static_cast<int>(amount);
 }
 
 void printTimeMeasurement(timeval start, timeval end, size_t size,
