@@ -1,0 +1,3 @@
+- [ ] whay we use this algo and whay is optimisd
+- [ ] how the bianry seach in the insert is work for the map
+- [ ] inderstand more the algo and wat is inserchen and merge insertion
