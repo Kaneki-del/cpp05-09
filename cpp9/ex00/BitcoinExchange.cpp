@@ -156,6 +156,16 @@ void BitcoinExchange::processInputFile(const std::string &input_filename) {
     }
 
     value = trim(value);
+    if (value.empty()) {
+      std::cerr << "Error: bad input (invalid amount format) => " << line
+        << std::endl;
+      continue;
+    }
+    if (value[0] == '-') {
+      std::cerr << "Error: not a positive number." << std::endl;
+      continue;
+    }
+
     errno = 0;
     double amount = std::strtod(value.c_str(), &endptr);
 
