@@ -1,5 +1,6 @@
 
 #include "PmergeMe.hpp"
+#include <iostream>
 
 PmergeMe::PmergeMe() {}
 PmergeMe::~PmergeMe() {}
@@ -25,6 +26,12 @@ int PmergeMe::getJacobsthalNumber(int n) {
 
   return getJacobsthalNumber(n - 1) + 2 * getJacobsthalNumber(n - 2);
 }
+void printPairs(const std::vector<std::pair<int, int>>& pairs_vec) {
+    for (const auto& p : pairs_vec) {
+        std::cout << "(" << p.first << ", " << p.second << ") ";
+    }
+    std::cout << std::endl;
+}
 
 void PmergeMe::sortVector(std::vector<int> &contains) {
 
@@ -32,9 +39,11 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
   std::vector<long long> index;
   std::vector<int> largest;
   std::vector<int> lowest;
+    std::vector<std::pair<int, int> > pairs_vec;
 
   largest.clear();
   lowest.clear();
+  pairs_vec.clear();
 
   // sorting pears
   for (unsigned long i = 1; i < contains.size(); i += 2) {
@@ -45,6 +54,10 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
   for (unsigned long i = 1; i < contains.size(); i += 2) {
     pairs_vec.push_back(std::make_pair(contains[i - 1], contains[i]));
   }
+
+  displaySequence(contains,  "Largest: ");
+
+  printPairs(pairs_vec);
 
   if (contains.size() % 2 != 0) {
     leftOver = contains.back();
@@ -58,9 +71,10 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
   if (largest.size() >= 2)
     sortVector(largest);
 
+
   if (lowest.size() == 1) {
-    largest.insert(std::lower_bound(largest.begin(), largest.end(), lowest[0]),
-                   lowest[0]);
+      largest.insert(largest.begin(), pairs_vec[0].second);
+
   } else {
     std::vector<long long> jacob_sequence =
         generateJacobsthalSequence<std::vector<long long> >(lowest.size() +
@@ -81,7 +95,9 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
       }
 
       int value_to_insert = pairs_vec[calculated_index].second;
+      std::cout << "calue to insert: " <<  value_to_insert << std::endl;
       int partner_value = pairs_vec[calculated_index].first;
+      std::cout << "partner_value: " <<  partner_value << std::endl;
 
       std::vector<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
       std::vector<int>::iterator insert_pos =
@@ -109,6 +125,7 @@ void PmergeMe::sortDeque(std::deque<int> &contains) {
 
   largest.clear();
   lowest.clear();
+  index.clear();
 
   // sorting pears
   for (unsigned long i = 1; i < contains.size(); i += 2) {
