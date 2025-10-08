@@ -43,12 +43,11 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
   }
 
   for (unsigned long i = 1; i < contains.size(); i += 2) {
-    pairs.push_back(std::make_pair(contains[i - 1], contains[i]));
+    pairs_vec.push_back(std::make_pair(contains[i - 1], contains[i]));
   }
 
   if (contains.size() % 2 != 0) {
     leftOver = contains.back();
-    // contains.pop_back();
   }
 
   for (unsigned long i = 1; i < contains.size(); i += 2) {
@@ -81,8 +80,8 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
         continue;
       }
 
-      int value_to_insert = pairs[calculated_index].second;
-      int partner_value = pairs[calculated_index].first;
+      int value_to_insert = pairs_vec[calculated_index].second;
+      int partner_value = pairs_vec[calculated_index].first;
 
       std::vector<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
       std::vector<int>::iterator insert_pos =
@@ -117,9 +116,11 @@ void PmergeMe::sortDeque(std::deque<int> &contains) {
       std::swap(contains[i - 1], contains[i]);
   }
 
+  for (unsigned long i = 1; i < contains.size(); i += 2) {
+    pairs_deque.push_back(std::make_pair(contains[i - 1], contains[i]));
+  }
   if (contains.size() % 2 != 0) {
     leftOver = contains.back();
-    // contains.pop_back();
   }
 
   for (unsigned long i = 1; i < contains.size(); i += 2) {
@@ -152,10 +153,12 @@ void PmergeMe::sortDeque(std::deque<int> &contains) {
         continue;
       }
 
-      long value_to_insert = lowest[calculated_index];
+      int value_to_insert = pairs_deque[calculated_index].second;
+      int partner_value = pairs_deque[calculated_index].first;
 
+      std::deque<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
       std::deque<int>::iterator insert_pos =
-          std::lower_bound(largest.begin(), largest.end(), value_to_insert);
+          std::lower_bound(largest.begin(), search_bound, value_to_insert);
 
       largest.insert(insert_pos, value_to_insert);
     }
