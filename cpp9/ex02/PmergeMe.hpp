@@ -3,6 +3,7 @@
 
 #include <cerrno>
 #include <deque>
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -64,10 +65,12 @@ public:
 private:
   std::vector<int> _vectorSequence;
   std::deque<int> _dequeSequence;
+  std::vector<std::pair<int, int> > pairs;
   int parseAndValidate(const std::string &num);
   void sortVector(std::vector<int> &contains);
   void sortDeque(std::deque<int> &contains);
   int getJacobsthalNumber(int n);
+
 };
 void displayUsage();
 #endif
