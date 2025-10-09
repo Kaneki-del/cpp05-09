@@ -65,8 +65,6 @@ public:
 private:
   std::vector<int> _vectorSequence;
   std::deque<int> _dequeSequence;
-  std::deque<std::pair<int, int> > pairs_deque;
-  std::vector<std::pair<int, int> > pairs_vec;
   int parseAndValidate(const std::string &num);
   void sortVector(std::vector<int> &contains);
   void sortDeque(std::deque<int> &contains);
