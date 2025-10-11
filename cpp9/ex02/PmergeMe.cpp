@@ -34,65 +34,59 @@ void PmergeMe::sortVector(std::vector<int> &contains) {
   std::vector<long long> index;
   std::vector<int> largest;
   std::vector<int> lowest;
-    std::vector<std::pair<int, int> > pairs_vec;
-
-  largest.clear();
-  lowest.clear();
-  pairs_vec.clear();
+  std::vector<std::pair<int, int> > pairs_vec;
 
   for (size_t i = 0; i + 1 < contains.size(); i += 2) {
     if (contains[i] > contains[i+1]) {
-        pairs_vec.push_back(std::make_pair(contains[i], contains[i+1]));
+      pairs_vec.push_back(std::make_pair(contains[i], contains[i+1]));
     } else {
-        pairs_vec.push_back(std::make_pair(contains[i+1], contains[i]));
+      pairs_vec.push_back(std::make_pair(contains[i+1], contains[i]));
     }
-}
-
+  }
 
   if (contains.size() % 2 != 0) {
     leftOver = contains.back();
   }
 
-std::sort(pairs_vec.begin(), pairs_vec.end());
+  std::sort(pairs_vec.begin(), pairs_vec.end());
 
-for (size_t i = 0; i < pairs_vec.size(); ++i) {
-  largest.push_back(pairs_vec[i].first); 
-  lowest.push_back(pairs_vec[i].second); 
-}
-
-largest.insert(largest.begin(), lowest[0]);
-std::vector<long long> jacob_sequence =
-generateJacobsthalSequence<std::vector<long long> >(lowest.size());
-
-index = generateindex<std::vector<long long> >(jacob_sequence);
-
-
-for (unsigned long i = 0; i < index.size(); i++) {
-  long long calculated_index_ll = index[i] - 1;
-
-  std::size_t calculated_index =
-    static_cast<std::size_t>(calculated_index_ll);
-
-  if (calculated_index >= lowest.size()) {
-    continue;
+  for (size_t i = 0; i < pairs_vec.size(); ++i) {
+    largest.push_back(pairs_vec[i].first); 
+    lowest.push_back(pairs_vec[i].second); 
   }
 
-  int value_to_insert = pairs_vec[calculated_index].second;
-  int partner_value = pairs_vec[calculated_index].first;
+  largest.insert(largest.begin(), lowest[0]);
+  std::vector<long long> jacob_sequence =
+    generateJacobsthalSequence<std::vector<long long> >(lowest.size());
 
-  std::vector<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
-  std::vector<int>::iterator insert_pos =
-    std::lower_bound(largest.begin(), search_bound, value_to_insert);
-  largest.insert(insert_pos, value_to_insert);
-}
-// }
+  index = generateindex<std::vector<long long> >(jacob_sequence);
 
-if (leftOver != -1) {
-  std::vector<int>::iterator insert_pos =
-    std::lower_bound(largest.begin(), largest.end(), leftOver);
-  largest.insert(insert_pos, leftOver);
-}
-contains = largest;
+
+  for (unsigned long i = 0; i < index.size(); i++) {
+    long long calculated_index_ll = index[i] - 1;
+
+    std::size_t calculated_index =
+      static_cast<std::size_t>(calculated_index_ll);
+
+    if (calculated_index >= lowest.size()) {
+      continue;
+    }
+
+    int value_to_insert = pairs_vec[calculated_index].second;
+    int partner_value = pairs_vec[calculated_index].first;
+
+    std::vector<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
+    std::vector<int>::iterator insert_pos =
+      std::lower_bound(largest.begin(), search_bound, value_to_insert);
+    largest.insert(insert_pos, value_to_insert);
+  }
+
+  if (leftOver != -1) {
+    std::vector<int>::iterator insert_pos =
+      std::lower_bound(largest.begin(), largest.end(), leftOver);
+    largest.insert(insert_pos, leftOver);
+  }
+  contains = largest;
 }
 
 void PmergeMe::sortDeque(std::deque<int> &contains) {
@@ -103,70 +97,63 @@ void PmergeMe::sortDeque(std::deque<int> &contains) {
   std::deque<int> lowest;
   std::vector<std::pair<int, int> > pairs_deque;
 
-
-  largest.clear();
-  lowest.clear();
-  pairs_deque.clear();
-
   for (size_t i = 0; i + 1 < contains.size(); i += 2) {
     if (contains[i] > contains[i+1]) {
-        pairs_deque.push_back(std::make_pair(contains[i], contains[i+1]));
+      pairs_deque.push_back(std::make_pair(contains[i], contains[i+1]));
     } else {
-        pairs_deque.push_back(std::make_pair(contains[i+1], contains[i]));
+      pairs_deque.push_back(std::make_pair(contains[i+1], contains[i]));
     }
-}
+  }
 
   if (contains.size() % 2 != 0) {
     leftOver = contains.back();
   }
 
-std::sort(pairs_deque.begin(), pairs_deque.end());
+  std::sort(pairs_deque.begin(), pairs_deque.end());
 
-for (size_t i = 0; i < pairs_deque.size(); ++i) {
-  largest.push_back(pairs_deque[i].first); 
-  lowest.push_back(pairs_deque[i].second); 
-}
-largest.insert(largest.begin(), lowest[0]);
-std::deque<long long> jacob_sequence =
-generateJacobsthalSequence<std::deque<long long> >(lowest.size());
-index = generateindex<std::deque<long long> >(jacob_sequence);
+  for (size_t i = 0; i < pairs_deque.size(); ++i) {
+    largest.push_back(pairs_deque[i].first); 
+    lowest.push_back(pairs_deque[i].second); 
+  }
+  largest.insert(largest.begin(), lowest[0]);
+  std::deque<long long> jacob_sequence =
+    generateJacobsthalSequence<std::deque<long long> >(lowest.size());
+  index = generateindex<std::deque<long long> >(jacob_sequence);
 
-for (unsigned long i = 0; i < index.size(); i++) {
-  long long calculated_index_ll = index[i] - 1;
+  for (unsigned long i = 0; i < index.size(); i++) {
+    long long calculated_index_ll = index[i] - 1;
 
-  std::size_t calculated_index =
-    static_cast<std::size_t>(calculated_index_ll);
+    std::size_t calculated_index =
+      static_cast<std::size_t>(calculated_index_ll);
 
-  if (calculated_index >= lowest.size()) {
-    continue;
+    if (calculated_index >= lowest.size()) {
+      continue;
+    }
+
+    int value_to_insert = pairs_deque[calculated_index].second;
+    int partner_value = pairs_deque[calculated_index].first;
+
+    std::deque<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
+    std::deque<int>::iterator insert_pos =
+      std::lower_bound(largest.begin(), search_bound, value_to_insert);
+
+    largest.insert(insert_pos, value_to_insert);
   }
 
-  int value_to_insert = pairs_deque[calculated_index].second;
-  int partner_value = pairs_deque[calculated_index].first;
-
-  std::deque<int>::iterator search_bound = std::find(largest.begin(), largest.end(), partner_value);
-  std::deque<int>::iterator insert_pos =
-    std::lower_bound(largest.begin(), search_bound, value_to_insert);
-
-  largest.insert(insert_pos, value_to_insert);
-}
-
-if (leftOver != -1) {
-  std::deque<int>::iterator insert_pos =
-    std::lower_bound(largest.begin(), largest.end(), leftOver);
-  largest.insert(insert_pos, leftOver);
-}
-
-contains = largest;
+  if (leftOver != -1) {
+    std::deque<int>::iterator insert_pos =
+      std::lower_bound(largest.begin(), largest.end(), leftOver);
+    largest.insert(insert_pos, leftOver);
+  }
+  contains = largest;
 }
 
 int PmergeMe::parseAndValidate(const std::string &str) {
-  const char *nptr = str.c_str();
   char *endptr;
   errno = 0;
-  long amount = std::strtol(nptr, &endptr, 10);
+  long amount = std::strtol(str.c_str(), &endptr, 10);
 
-  if (endptr == nptr) {
+  if (endptr == str.c_str()) {
     throw std::invalid_argument("Error: Input is not a valid number.");
   }
   while (*endptr != '\0' && std::isspace(*endptr)) {
