@@ -1,16 +1,16 @@
 #ifndef PMERGEME
 #define PMERGEME
 
-#include <cerrno>
-#include <deque>
 #include <algorithm>
+#include <cerrno>
+#include <cstdlib>
+#include <deque>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <limits>
 #include <sys/time.h>
 #include <vector>
-#include <cstdlib>
 
 class PmergeMe {
 public:
@@ -69,7 +69,6 @@ private:
   void sortVector(std::vector<int> &contains);
   void sortDeque(std::deque<int> &contains);
   int getJacobsthalNumber(int n);
-
 };
 void displayUsage();
 #endif
