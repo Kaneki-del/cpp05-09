@@ -1,4 +1,4 @@
-#include "Rpn.hpp"
+#include "RPN.hpp"
 
 Rpn::Rpn() {}
 
@@ -76,6 +76,7 @@ void Rpn::doDiv() {
 }
 
 void Rpn::processInput(const std::string &input) {
+
   std::stringstream ss(input);
   std::string segment;
   while (std::getline(ss, segment, ' ')) {
