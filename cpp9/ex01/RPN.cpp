@@ -1,20 +1,20 @@
 #include "RPN.hpp"
 
-Rpn::Rpn() {}
+RPN::RPN() {}
 
-Rpn::~Rpn() {}
+RPN::~RPN() {}
 
-Rpn::Rpn(const Rpn &other) : st(other.st) {}
+RPN::RPN(const RPN &other) : st(other.st) {}
 
-Rpn &Rpn::operator=(const Rpn &other) {
+RPN &RPN::operator=(const RPN &other) {
   if (this != &other)
     st = other.st;
   return *this;
 }
 
-int Rpn::getTopValue() { return st.top(); }
+int RPN::getTopValue() { return st.top(); }
 
-long Rpn::checkOverFlow(long result) {
+long RPN::checkOverFlow(long result) {
   if (result > std::numeric_limits<int>::max() ||
       result < std::numeric_limits<int>::min())
     throw std::out_of_range(
@@ -22,7 +22,7 @@ long Rpn::checkOverFlow(long result) {
   return result;
 }
 
-void Rpn::doAdd() {
+void RPN::doAdd() {
   if (st.size() < 2) {
     throw std::invalid_argument(
         "Error: Operation requires two numbers on the stack.");
@@ -34,7 +34,7 @@ void Rpn::doAdd() {
   st.push(checkOverFlow(A + B));
 }
 
-void Rpn::doSubtract() {
+void RPN::doSubtract() {
   if (st.size() < 2) {
     throw std::invalid_argument(
         "Error: Operation requires two numbers on the stack.");
@@ -47,7 +47,7 @@ void Rpn::doSubtract() {
   st.push(checkOverFlow(A - B));
 }
 
-void Rpn::doMultiply() {
+void RPN::doMultiply() {
   if (st.size() < 2) {
     throw std::invalid_argument(
         "Error: Operation requires two numbers on the stack.");
@@ -60,7 +60,7 @@ void Rpn::doMultiply() {
   st.push(checkOverFlow(A * B));
 }
 
-void Rpn::doDiv() {
+void RPN::doDiv() {
   if (st.size() < 2) {
     throw std::invalid_argument(
         "Error: Operation requires two numbers on the stack.");
@@ -75,7 +75,7 @@ void Rpn::doDiv() {
   st.push(A / B);
 }
 
-void Rpn::processInput(const std::string &input) {
+void RPN::processInput(const std::string &input) {
 
   std::stringstream ss(input);
   std::string segment;
@@ -105,7 +105,7 @@ void Rpn::processInput(const std::string &input) {
   }
 
   if (st.size() != 1) {
-    throw std::invalid_argument("Error: Invalid Rpn expression. Stack must "
+    throw std::invalid_argument("Error: Invalid RPN expression. Stack must "
                                 "contain exactly one result.");
   }
 }

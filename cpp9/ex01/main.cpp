@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   try {
-    Rpn rpn;
+    RPN rpn;
     rpn.processInput(argv[1]);
     std::cout << rpn.getTopValue() << std::endl;
 

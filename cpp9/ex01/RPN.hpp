@@ -1,5 +1,5 @@
-#ifndef Rpn_HPP
-#define Rpn_HPP
+#ifndef RPN_HPP
+#define RPN_HPP
 
 #include <cctype>
 #include <iostream>
@@ -8,12 +8,12 @@
 #include <stack>
 #include <string>
 
-class Rpn {
+class RPN {
 public:
-  Rpn();
-  ~Rpn();
-  Rpn(const Rpn &other);
-  Rpn &operator=(const Rpn &other);
+  RPN();
+  ~RPN();
+  RPN(const RPN &other);
+  RPN &operator=(const RPN &other);
   void processInput(const std::string &input);
   int getTopValue();
 
